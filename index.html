@@ -1,1 +1,552 @@
-<h1>Take A Trip, Cumilla</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>42K Members Celebration | Take A Trip, Cumilla</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* ==========================================
+           1. CSS RESET & GLOBAL VARIABLES
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fb-blue: #1877f2;
+            --fb-light-blue: #00d2ff;
+            --fb-dark-blue: #0b182e;
+            --white-glow: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #0b182e, #1877f2, #0052d4, #08111e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+            color: #ffffff;
+            position: relative;
+            padding: 1.5rem;
+        }
+
+        /* ==========================================
+           2. ANIMATED BACKGROUND GRADIENT
+           ========================================== */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Ambient Glow Spheres in Background */
+        .ambient-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .glow-1 {
+            width: 350px;
+            height: 350px;
+            background: rgba(24, 119, 242, 0.4);
+            top: 10%;
+            left: 10%;
+            animation: floatGlow 8s ease-in-out infinite alternate;
+        }
+        .glow-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 210, 255, 0.3);
+            bottom: 10%;
+            right: 10%;
+            animation: floatGlow 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, -40px); }
+        }
+
+        /* ==========================================
+           3. FLOATING BALLOONS
+           ========================================== */
+        .balloons-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -120px;
+            width: 45px;
+            height: 55px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            opacity: 0.75;
+            animation: floatUp 12s linear infinite;
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 8px solid inherit;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -22px;
+            left: 50%;
+            width: 1.5px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translateY(-120vh) rotate(20deg);
+                opacity: 0;
+            }
+        }
+
+        /* ==========================================
+           4. GLASSMORPHISM CARD CONTAINERS
+           ========================================== */
+        .card-container {
+            position: relative;
+            z-index: 10;
+            max-width: 680px;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 3.5rem 2.5rem;
+            text-align: center;
+            box-shadow: var(--glass-shadow);
+            animation: cardEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Header Badge */
+        .community-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.5rem 1.2rem;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--fb-light-blue);
+            margin-bottom: 2rem;
+        }
+
+        /* Logo Placeholder */
+        .logo-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 2rem;
+        }
+
+        .logo-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--fb-blue), var(--fb-light-blue), #ffffff);
+            animation: spinRing 6s linear infinite;
+        }
+
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1877f2, #0b182e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #ffffff;
+            box-shadow: 0 10px 25px rgba(24, 119, 242, 0.5);
+            overflow: hidden;
+        }
+
+        .logo-inner i {
+            font-size: 3.5rem;
+            color: #ffffff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Typography */
+        .celebration-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 30%, var(--fb-light-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .thank-you-msg {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.88);
+            max-width: 540px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+        }
+
+        .highlight-text {
+            color: var(--fb-light-blue);
+            font-weight: 700;
+        }
+
+        /* ==========================================
+           5. ANIMATED COUNTER SECTION
+           ========================================== */
+        .counter-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--fb-light-blue), transparent);
+        }
+
+        .counter-number {
+            font-size: clamp(2.5rem, 6vw, 3.8rem);
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .counter-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        /* ==========================================
+           6. GLOWING BUTTON
+           ========================================== */
+        .btn-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .btn-visit {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1.15rem 2.8rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1877f2 0%, #0052d4 100%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 0 25px rgba(24, 119, 242, 0.6), 0 0 50px rgba(24, 119, 242, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+        }
+
+        .btn-visit i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-visit:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 0 35px rgba(24, 119, 242, 0.9), 0 0 70px rgba(0, 210, 255, 0.6);
+            border-color: #ffffff;
+        }
+
+        .btn-visit:hover i {
+            transform: translateX(5px);
+        }
+
+        .btn-visit:active {
+            transform: translateY(1px) scale(0.99);
+        }
+
+        /* Shiny Sheen Effect */
+        .btn-visit::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.25) 50%,
+                transparent 70%
+            );
+            transform: rotate(30deg);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            20%, 100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        /* Footer Tagline */
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ==========================================
+           7. MEDIA QUERIES FOR RESPONSIVENESS
+           ========================================== */
+        @media (max-width: 480px) {
+            .card-container {
+                padding: 2.5rem 1.5rem;
+                border-radius: 24px;
+            }
+
+            .logo-wrapper {
+                width: 100px;
+                height: 100px;
+            }
+
+            .logo-inner i {
+                font-size: 2.5rem;
+            }
+
+            .btn-visit {
+                width: 100%;
+                justify-content: center;
+                padding: 1rem 1.8rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <div class="balloons-wrapper" id="balloonsWrapper"></div>
+
+    <main class="card-container">
+        
+        <div class="community-badge">
+            <i class="fa-solid => fa-plane-departure"></i>
+            <span>Take A Trip, Cumilla</span>
+        </div>
+
+        <div class="logo-wrapper">
+            <div class="logo-ring"></div>
+            <div class="logo-inner">
+                <i class="fa-brands fa-facebook-f"></i>
+            </div>
+        </div>
+
+        <h1 class="celebration-title">42K Members Celebration</h1>
+
+        <p class="thank-you-msg">
+            A heartfelt <span class="highlight-text">Thank You</span> to each traveler, explorer, and storyteller in our community! Your passion for discovery and shared experiences made reaching this amazing milestone possible.
+        </p>
+
+        <div class="counter-box">
+            <div class="counter-number">
+                <span id="memberCounter">0</span>
+                <span>+</span>
+            </div>
+            <div class="counter-label">Active Explorers & Members</div>
+        </div>
+
+        <div class="btn-wrapper">
+            <a href="https://www.facebook.com/groups/takeatripcumilla" target="_blank" rel="noopener noreferrer" class="btn-visit" id="visitBtn">
+                <span>Visit Facebook Group</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <p class="footer-note">Together, exploring new horizons every single day.</p>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Trigger Confetti Cannon on Load
+            launchCelebrationConfetti();
+
+            // 2. Animate Member Counter
+            animateCounter('memberCounter', 0, 42000, 2500);
+
+            // 3. Generate Floating Balloons
+            createBalloons(15);
+
+            // 4. Button Click Confetti
+            const visitBtn = document.getElementById('visitBtn');
+            visitBtn.addEventListener('click', () => {
+                launchCelebrationConfetti();
+            });
+        });
+
+        /* Confetti Cannon Effect using Canvas-Confetti */
+        function launchCelebrationConfetti() {
+            if (typeof confetti === 'function') {
+                // Left Burst
+                confetti({
+                    particleCount: 80,
+                    angle: 60,
+                    spread: 70,
+                    origin: { x: 0, y: 0.7 },
+                    colors: ['#1877f2', '#00d2ff', '#ffffff', '#ffd700']
+                });
+                // Right Burst
+                confetti({
+                    particleCount: 80,
+                    angle: 120,
+                    spread: 70,
+                    origin: { x: 1, y: 0.7 },
+                    colors: ['#1877f2', '#00d2ff', '#ffffff', '#ffd700']
+                });
+            }
+        }
+
+        /* Animated Number Counter Function */
+        function animateCounter(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                
+                // Ease-Out Quadratic formula for smooth slowing down
+                const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+                const currentCount = Math.floor(easeOutProgress * (end - start) + start);
+                
+                // Format with comma
+                obj.innerText = currentCount.toLocaleString();
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        /* Dynamic Floating Balloons Generator */
+        function createBalloons(count) {
+            const wrapper = document.getElementById('balloonsWrapper');
+            const colors = [
+                '#1877f2', // FB Blue
+                '#00d2ff', // Light Blue
+                '#ffffff', // White
+                '#3b5998', // Classic FB Blue
+                '#60a5fa'  // Soft Blue
+            ];
+
+            for (let i = 0; i < count; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'balloon';
+
+                // Random styling parameters
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const leftPos = Math.random() * 95; // % position
+                const size = 35 + Math.random() * 25; // balloon width in px
+                const duration = 9 + Math.random() * 8; // float duration in seconds
+                const delay = Math.random() * 6; // animation delay
+
+                balloon.style.background = color;
+                balloon.style.left = `${leftPos}%`;
+                balloon.style.width = `${size}px`;
+                balloon.style.height = `${size * 1.2}px`;
+                balloon.style.animationDuration = `${duration}s`;
+                balloon.style.animationDelay = `${delay}s`;
+
+                wrapper.appendChild(balloon);
+            }
+        }
+    </script>
+</body>
+</html>
